@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<listeners>
+		<listener class-name="testathon.framework.TestListeners"></listener>
+	</listeners>
+
+	<test thread-count="1" name="TestChrome" parallel="false">
+		<parameter name="env" value="chrome" />
+		<classes>
+			<class name="testathon.tests.TestWordPressApp" />
+		</classes>
+	</test>
+	
+	<test thread-count="1" name="TestChromeEmulator" parallel="false">
+		<parameter name="env" value="chrome-emulator" />
+		<classes>
+			<class name="testathon.tests.TestWordPressApp" />
+		</classes>
+	</test>
+
+</suite>
