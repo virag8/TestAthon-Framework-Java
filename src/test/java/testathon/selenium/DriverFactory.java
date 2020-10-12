@@ -1,4 +1,4 @@
-package testathon.selenium;
+package test.java.testathon.selenium;
 
 import org.openqa.selenium.WebDriver;
 

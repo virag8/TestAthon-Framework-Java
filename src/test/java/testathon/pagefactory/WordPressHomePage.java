@@ -1,4 +1,4 @@
-package testathon.pagefactory;
+package test.java.testathon.pagefactory;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

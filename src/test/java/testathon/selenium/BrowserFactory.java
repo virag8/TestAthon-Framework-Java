@@ -1,7 +1,9 @@
-package testathon.selenium;
+package test.java.testathon.selenium;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +18,7 @@ import org.testng.Reporter;
 import com.aventstack.extentreports.ExtentTest;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import testathon.utils.Report;
+import test.java.testathon.utils.Report;
 
 public class BrowserFactory {
 	public static WebDriver Launch(String env) {
@@ -65,10 +67,10 @@ public class BrowserFactory {
 
 	public static boolean getScreenshotOfCurrentScreenAndSaveWith(String name, WebDriver driver, ExtentTest logger) {
 		File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		String basePath = System.getProperty("user.dir") + "/test-output//";
+		Path screenshotFilePath = Paths.get(System.getProperty("user.dir"), "test-output" , name + ".png");
 
 		try {
-			File screenshot = new File(basePath + name + ".png");
+			File screenshot = new File(screenshotFilePath.toString());
 			FileHandler.copy(screenshotFile, screenshot);
 			String path = "<img src=\"" + screenshot.toString() + "\"/>";
 			Report report = Report.getInstance();

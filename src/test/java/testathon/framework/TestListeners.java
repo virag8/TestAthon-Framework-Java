@@ -1,4 +1,5 @@
-package testathon.framework;
+package test.java.testathon.framework;
+
 
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
@@ -7,9 +8,9 @@ import org.testng.ITestResult;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
+import test.java.testathon.selenium.BrowserFactory;
+import test.java.testathon.utils.Report;
 
-import testathon.selenium.BrowserFactory;
-import testathon.utils.Report;
 
 public class TestListeners implements ITestListener {
 
@@ -19,18 +20,19 @@ public class TestListeners implements ITestListener {
 	public void onTestStart(ITestResult result) {
 		ITestContext context = result.getTestContext();
 		String env = (String) context.getAttribute("env");
-		logger = report.createExtent(result.getInstanceName() + " " + env);
+		String testName = result.getName() + "@"+ result.getInstance().toString().split("@")[1];
+		logger = report.createExtent(testName + " [" + env+"]");
 		Report.setTest(logger);
-		Report.getTest().log(Status.INFO, "TEST STARTED:");
+		Report.getTest().log(Status.INFO, "TEST STARTED: "+result.getInstance().toString());
 		Report.getTest().log(Status.INFO, "BROWSER: " + env);
 	}
 
 	public void onTestSuccess(ITestResult result) {
-		Report.getTest().log(Status.INFO, "TEST SUCCESSFULL:");
+		Report.getTest().log(Status.INFO, "TEST SUCCESSFUL:");
 	}
 
 	public void onTestFailure(ITestResult result) {
-		String testName = result.getName();
+		String testName = result.getName() + "@"+ result.getInstance().toString().split("@")[1];
 		Report.getTest().log(Status.FAIL, result.getThrowable().getMessage());
 		Report.getTest().log(Status.FAIL, "TEST FAILED");
 		ITestContext context = result.getTestContext();
@@ -41,15 +43,16 @@ public class TestListeners implements ITestListener {
 	public void onTestSkipped(ITestResult result) {
 		ITestContext context = result.getTestContext();
 		String env = (String) context.getAttribute("env");
+		String testName = result.getName() + "@"+ result.getInstance().toString().split("@")[1];
 
-		logger = report.createExtent(result.getName());
+		logger = report.createExtent(testName+ " [" + env+"]");
 		Report.setTest(logger);
 		Report.getTest().log(Status.WARNING, "TEST SKIPPED");
 		Report.getTest().log(Status.INFO, "BROWSER: " + env);
 	}
 
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-		Report.getTest().log(Status.WARNING, "TEST FAILED WITH SUCCESS PERCENTAGE:");
+		Report.getTest().log(Status.WARNING, "TEST FAILED WITH Warnings");
 	}
 
 	public void onStart(ITestContext context) {

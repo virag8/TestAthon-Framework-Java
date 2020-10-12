@@ -1,4 +1,4 @@
-package testathon.tests;
+package test.java.testathon.tests;
 
 import org.testng.ITestContext;
 import org.testng.Reporter;
@@ -7,10 +7,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import test.java.testathon.pagefactory.WordPressHomePage;
+import test.java.testathon.pagefactory.WordPressLoginPage;
+import test.java.testathon.selenium.DriverFactory;
 
-import testathon.pagefactory.WordPressHomePage;
-import testathon.pagefactory.WordPressLoginPage;
-import testathon.selenium.DriverFactory;
 
 public class TestWordPressApp {
 

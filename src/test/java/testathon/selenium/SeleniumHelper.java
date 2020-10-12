@@ -1,4 +1,4 @@
-package testathon.selenium;
+package test.java.testathon.selenium;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +24,7 @@ import com.google.common.io.Files;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-public class Selenium {
+public class SeleniumHelper {
 	public static int timeoutSec = 5;
 
 	public static WebDriver driver = null;
@@ -89,23 +89,4 @@ public class Selenium {
 
 	}
 
-	public static File screenshot() {
-		File destFile = null;
-		String pattern = "dd-MMM-yyyy-H-m-s";
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		String date = simpleDateFormat.format(new Date());
-
-		try {
-			File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-			try {
-				destFile = new File("test-output//SeleniumDriver_screenshot_" + date + ".png");
-				Files.move(screenshotFile, destFile);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} catch (WebDriverException w) {
-		}
-
-		return destFile;
-	}
 }
