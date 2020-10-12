@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class WordPressLoginPage {
 
-	protected static WebDriver driver;
+	protected WebDriver driver;
 
 	@FindBy(how = How.ID, using = "wp-submit")
 	private WebElement btnSubmit;

@@ -8,14 +8,14 @@ import org.openqa.selenium.support.PageFactory;
 
 public class WordPressHomePage {
 
-	protected static WebDriver driver;
+	protected WebDriver driver;
 
 	@FindBy(how = How.ID, using = "wp-admin-bar-my-account")
 	private WebElement lblMyAccount;
 
 	public WordPressHomePage(WebDriver driver) {
 		// TODO Auto-generated constructor stub
-		WordPressHomePage.driver = driver;
+		this.driver = driver;
 		if (!driver.getTitle().contains("Dashboard")) {
 			throw new IllegalStateException(
 					"This is not Home Page of logged in user," + " current page is: " + driver.getTitle());

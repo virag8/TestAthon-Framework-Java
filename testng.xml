@@ -5,18 +5,18 @@
 		<listener class-name="test.java.testathon.framework.TestListeners"></listener>
 	</listeners>
 
-	<test thread-count="1" name="TestChrome" parallel="false">
-		<parameter name="env" value="chrome" />
+	<test thread-count="2" name="TestChrome" parallel="methods">
+		<parameter name="env" value="chrome-remote" />
 		<classes>
 			<class name="test.java.testathon.tests.TestWordPressApp" />
 		</classes>
 	</test>
 	
-	<test thread-count="1" name="TestChromeEmulator" parallel="false">
+	<!-- <test thread-count="2" name="TestChromeEmulator" parallel="methods">
 		<parameter name="env" value="chrome-emulator" />
 		<classes>
 			<class name="test.java.testathon.tests.TestWordPressApp" />
 		</classes>
 	</test>
-
+ -->
 </suite>

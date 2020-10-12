@@ -2,6 +2,8 @@ package test.java.testathon.selenium;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -13,6 +15,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Reporter;
 
 import com.aventstack.extentreports.ExtentTest;
@@ -30,6 +34,9 @@ public class BrowserFactory {
 			break;
 		case "chrome-emulator":
 			driver = BrowserFactory.chromeEmulatorlaunch();
+			break;
+		case "chrome-remote":
+			driver = BrowserFactory.chromeRemotelaunch();
 			break;
 		default:
 			break;
@@ -65,9 +72,35 @@ public class BrowserFactory {
 		return driver;
 	}
 
+	public static WebDriver chromeRemotelaunch() {
+
+		final String USERNAME = "virag1";
+		final String AUTOMATE_KEY = "UzxmJ8R6k7dUmiY3gYT7";
+		final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
+
+		DesiredCapabilities caps = new DesiredCapabilities();
+
+		caps.setCapability("os", "Windows");
+		caps.setCapability("os_version", "10");
+		caps.setCapability("browser", "Chrome");
+		caps.setCapability("browser_version", "80");
+		caps.setCapability("name", "virag1's First Test");
+
+		WebDriver driver = null;
+		try {
+			driver = new RemoteWebDriver(new URL(URL), caps);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("driver launched: " + driver);
+
+		return driver;
+	}
+
 	public static boolean getScreenshotOfCurrentScreenAndSaveWith(String name, WebDriver driver, ExtentTest logger) {
 		File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		Path screenshotFilePath = Paths.get(System.getProperty("user.dir"), "test-output" , name + ".png");
+		Path screenshotFilePath = Paths.get(System.getProperty("user.dir"), "test-output", name + ".png");
 
 		try {
 			File screenshot = new File(screenshotFilePath.toString());
