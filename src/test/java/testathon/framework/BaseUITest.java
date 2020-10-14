@@ -24,7 +24,7 @@ public class BaseUITest {
             jsonDataProvider();
             env = Env;
             envParams = convertToMap(EnvParams);
-            Reporter.log("Running tests for env " + env);
+            Reporter.log("Running tests for UI Environment: " + env);
 
         } catch (Exception e) {
             // TODO: handle exception

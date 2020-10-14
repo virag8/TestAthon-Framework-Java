@@ -9,7 +9,7 @@ import test.java.testathon.pagefactory.WordPressLoginPage;
 import test.java.testathon.utils.Report;
 
 
-public class TestWordPressApp extends BaseUITest {
+public class UITestWordPressApp extends BaseUITest {
 
     @Test(enabled = true, dataProvider = "jsonDataProvider")
     public void testWordPressLogin(JSONObject testData) {

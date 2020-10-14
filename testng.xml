@@ -2,13 +2,13 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
 	<listeners>
-		<listener class-name="test.java.testathon.framework.TestListeners"></listener>
+		<listener class-name="test.java.testathon.framework.TestListeners"/>
 	</listeners>
 
 	<test thread-count="2" name="TestChrome" parallel="methods">
 		<parameter name="env" value="chrome" />
 		<classes>
-			<class name="test.java.testathon.tests.TestWordPressApp" />
+			<class name="test.java.testathon.tests.UITestWordPressApp" />
 		</classes>
 	</test>
 	
@@ -17,7 +17,7 @@
 		<parameter name="env" value="chrome-remote" />
 		<parameter name="env_params" value="os=Windows,os_version=10,browser=chrome,browser_version=80,name=TestWordPressApp" />
 		<classes>
-			<class name="test.java.testathon.tests.TestWordPressApp" />
+			<class name="test.java.testathon.tests.UITestWordPressApp" />
 		</classes>
 	</test>
 
@@ -25,14 +25,14 @@
 		<parameter name="env" value="chrome-emulator" />
 		<parameter name="env_params" value="deviceName=Nexus 5" />
 		<classes>
-			<class name="test.java.testathon.tests.TestWordPressApp" />
+			<class name="test.java.testathon.tests.UITestWordPressApp" />
 		</classes>
 	</test>
 
 	<test thread-count="2" name="TestChrome" parallel="methods">
 		<parameter name="env" value="chrome" />
 		<classes>
-			<class name="test.java.testathon.tests.TestWordPressApp" />
+			<class name="test.java.testathon.tests.UITestWordPressApp" />
 		</classes>
 	</test>
  -->

@@ -20,7 +20,7 @@ public class TestListeners implements ITestListener {
         String testName = result.getName() + "@" + UUID.randomUUID().toString().replace("-", "");
         ITestContext context = result.getTestContext();
         String env = (String) context.getAttribute("env");
-        String envParams = context.getAttribute("envParams").toString();
+        String envParams = (String) context.getAttribute("envParams");
         logger = report.createExtent(testName + " [" + env + "]");
         Report.setTest(logger);
         Report.getTest().log(Status.INFO, "TEST STARTED: " + result.getInstance().toString());
