@@ -1,14 +1,8 @@
 package test.java.testathon.selenium;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -18,102 +12,112 @@ import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Reporter;
-
-import com.aventstack.extentreports.ExtentTest;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
+import test.java.testathon.utils.PropertiesUtils;
 import test.java.testathon.utils.Report;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
 public class BrowserFactory {
-	public static WebDriver Launch(String env) {
-		WebDriver driver = null;
-		// TODO Auto-generated constructor stub
-		switch (env.toLowerCase()) {
-		case "chrome":
-			driver = BrowserFactory.chromelaunch();
-			break;
-		case "chrome-emulator":
-			driver = BrowserFactory.chromeEmulatorlaunch();
-			break;
-		case "chrome-remote":
-			driver = BrowserFactory.chromeRemotelaunch();
-			break;
-		default:
-			break;
-		}
-		return driver;
-	}
+    static Properties prop = null;
 
-	public static WebDriver chromeEmulatorlaunch() {
+    public static WebDriver Launch(String env, Map<String, String> browserParams) {
+        WebDriver driver = null;
+        prop = PropertiesUtils.load("src/main/resources/env.properties");
+        // TODO Auto-generated constructor stub
+        switch (env.toLowerCase()) {
+            case "chrome":
+                driver = BrowserFactory.chromeLaunch(browserParams);
+                break;
+            case "chrome-emulator":
+                driver = BrowserFactory.chromeEmulatorLaunch(browserParams);
+                break;
+            case "chrome-remote":
+                driver = BrowserFactory.chromeRemoteLaunch(browserParams);
+                break;
+            default:
+                break;
+        }
+        return driver;
+    }
 
-		WebDriverManager.chromedriver().setup();
+    public static WebDriver chromeEmulatorLaunch(Map<String, String> browserParams) {
 
-		Map<String, String> mobileEmulation = new HashMap<String, String>();
+        WebDriverManager.chromedriver().setup();
 
-		mobileEmulation.put("deviceName", "Nexus 5");
+        Map<String, String> mobileEmulation = new HashMap<>();
 
-		ChromeOptions chromeOptions = new ChromeOptions();
-		chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+        mobileEmulation.put("deviceName", browserParams.get("deviceName"));
 
-		WebDriver driver = new ChromeDriver(chromeOptions);
-		System.out.println("driver launched: " + driver);
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
 
-		return driver;
-	}
+        WebDriver driver = new ChromeDriver(chromeOptions);
+        System.out.println("driver launched: " + driver);
 
-	public static WebDriver chromelaunch() {
+        return driver;
+    }
 
-		// System.setProperty("webdriver.chrome.driver", "resources/chromedriver_mac");
-		WebDriverManager.chromedriver().setup();
+    public static WebDriver chromeLaunch(Map<String, String> browserParams) {
 
-		WebDriver driver = new ChromeDriver();
-		System.out.println("driver launched: " + driver);
+        WebDriverManager.chromedriver().setup();
 
-		return driver;
-	}
+        WebDriver driver = new ChromeDriver();
+        System.out.println("driver launched: " + driver);
 
-	public static WebDriver chromeRemotelaunch() {
+        return driver;
+    }
 
-		final String USERNAME = "virag1";
-		final String AUTOMATE_KEY = "UzxmJ8R6k7dUmiY3gYT7";
-		final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
+    public static WebDriver chromeRemoteLaunch(Map<String, String> browserParams) {
 
-		DesiredCapabilities caps = new DesiredCapabilities();
+        final String USERNAME = prop.getProperty("bs.username");
+        final String AUTOMATE_KEY = prop.getProperty("bs.automation_key");
+        final String URL = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
 
-		caps.setCapability("os", "Windows");
-		caps.setCapability("os_version", "10");
-		caps.setCapability("browser", "Chrome");
-		caps.setCapability("browser_version", "80");
-		caps.setCapability("name", "virag1's First Test");
+        DesiredCapabilities caps = new DesiredCapabilities();
 
-		WebDriver driver = null;
-		try {
-			driver = new RemoteWebDriver(new URL(URL), caps);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("driver launched: " + driver);
+        caps.setCapability("os", browserParams.get("os"));
+        caps.setCapability("os_version", browserParams.get("os_version"));
+        caps.setCapability("browser", browserParams.get("browser"));
+        caps.setCapability("browser_version", browserParams.get("browser_version"));
 
-		return driver;
-	}
+        caps.setCapability("name", browserParams.get("name"));
 
-	public static boolean getScreenshotOfCurrentScreenAndSaveWith(String name, WebDriver driver, ExtentTest logger) {
-		File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		Path screenshotFilePath = Paths.get(System.getProperty("user.dir"), "test-output", name + ".png");
+        WebDriver driver = null;
+        try {
+            driver = new RemoteWebDriver(new URL(URL), caps);
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("driver launched: " + driver);
 
-		try {
-			File screenshot = new File(screenshotFilePath.toString());
-			FileHandler.copy(screenshotFile, screenshot);
-			String path = "<img src=\"" + screenshot.toString() + "\"/>";
-			Report report = Report.getInstance();
-			report.addScreenCapture(screenshot.toString(), logger);
-			Reporter.log(path);
+        return driver;
+    }
 
-			return true;
-		} catch (IOException e) {
-			return false;
-		}
-	}
+    public static boolean getScreenshotOfCurrentScreenAndSaveWith(String name, WebDriver driver, ExtentTest logger) {
+        File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        Path screenshotFilePath = Paths.get(System.getProperty("user.dir"), "test-output", name + ".png");
+
+        try {
+            File screenshot = new File(screenshotFilePath.toString());
+            FileHandler.copy(screenshotFile, screenshot);
+            String path = "<img src=\"" + screenshot.toString() + "\"/>";
+            Report report = Report.getInstance();
+            report.addScreenCapture(screenshot.toString(), logger);
+            Reporter.log(path);
+
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
 
 }

@@ -2,18 +2,24 @@ package test.java.testathon.selenium;
 
 import org.openqa.selenium.WebDriver;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DriverFactory {
 
 	String browser = "";
+	Map<String, String> browserParams;
 
 	private DriverFactory() {
 		// Do-nothing..Do not allow to initialize this class from outside
+		browserParams = new HashMap<String, String>();
 	}
 
 	private static DriverFactory instance = new DriverFactory();
 
-	public static DriverFactory getInstance(String browser) {
+	public static DriverFactory getInstance(String browser, Map<String, String> browserParams) {
 		instance.browser = browser;
+		instance.browserParams=browserParams;
 		return instance;
 	}
 
@@ -21,7 +27,7 @@ public class DriverFactory {
 	{
 		@Override
 		protected WebDriver initialValue() {
-			return BrowserFactory.Launch(instance.browser); // can be replaced with other browser drivers
+			return BrowserFactory.Launch(instance.browser, instance.browserParams); // can be replaced with other browser drivers
 		}
 	};
 

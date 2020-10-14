@@ -22,10 +22,11 @@ public class TestListeners implements ITestListener {
 		String testName = result.getName() + "@" + UUID.randomUUID().toString().replace("-", "");
 		ITestContext context = result.getTestContext();
 		String env = (String) context.getAttribute("env");
+		String envParams = context.getAttribute("envParams").toString();
 		logger = report.createExtent(testName + " [" + env + "]");
 		Report.setTest(logger);
 		Report.getTest().log(Status.INFO, "TEST STARTED: " + result.getInstance().toString());
-		Report.getTest().log(Status.INFO, "BROWSER: " + env);
+		Report.getTest().log(Status.INFO, "Environment: " + env + "//EnvParams: "+envParams);
 	}
 
 	public void onTestSuccess(ITestResult result) {
