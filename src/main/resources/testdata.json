@@ -1,0 +1,18 @@
+{
+  "testWordPressLogin": [
+    {
+      "user": "opensourcecms",
+      "password": "opensourcecms"
+    },
+    {
+      "user": "opensourcecms",
+      "password": "opensourcecms"
+    }
+  ],
+  "testWordPressInvalidLogin": [
+    {
+      "user": "opensourcecms",
+      "password": "opensourcecms1"
+    }
+  ]
+}
