@@ -5,8 +5,9 @@
         <listener class-name="test.java.testathon.framework.TestListeners"/>
     </listeners>
 
-    <test thread-count="2" name="TestChrome" parallel="methods">
-        <parameter name="env" value="chrome"/>
+    <test thread-count="2" name="TestChromeEmulator" parallel="methods">
+        <parameter name="env" value="local-chrome-emulator"/>
+        <parameter name="env_params" value="deviceName=Nexus 5"/>
         <classes>
             <class name="test.java.testathon.tests.UITestWordPressApp"/>
         </classes>
@@ -14,7 +15,7 @@
 
     <!--
     <test thread-count="2" name="TestChromeBrowserStack" parallel="methods">
-        <parameter name="env" value="chrome-remote" />
+        <parameter name="env" value="remote-cloud" />
         <parameter name="env_params" value="os=Windows,os_version=10,browser=chrome,browser_version=80,name=TestWordPressApp" />
         <classes>
             <class name="test.java.testathon.tests.UITestWordPressApp" />
@@ -22,7 +23,7 @@
     </test>
 
     <test thread-count="2" name="TestChromeEmulator" parallel="methods">
-        <parameter name="env" value="chrome-emulator" />
+        <parameter name="env" value="local-chrome-emulator" />
         <parameter name="env_params" value="deviceName=Nexus 5" />
         <classes>
             <class name="test.java.testathon.tests.UITestWordPressApp" />
@@ -30,18 +31,19 @@
     </test>
 
     <test thread-count="2" name="TestChrome" parallel="methods">
-        <parameter name="env" value="chrome" />
+        <parameter name="env" value="local-chrome" />
         <classes>
             <class name="test.java.testathon.tests.UITestWordPressApp" />
         </classes>
     </test>
 
     <test thread-count="2" name="TestChromeRemoteDockerGrid" parallel="methods">
-        <parameter name="env" value="chrome-remote-grid" />
-        <parameter name="env_params" value="browser=chrome" />
+        <parameter name="env" value="remote-grid"/>
+        <parameter name="env_params" value="browser=chrome"/>
         <classes>
-            <class name="test.java.testathon.tests.UITestWordPressApp" />
+            <class name="test.java.testathon.tests.UITestWordPressApp"/>
         </classes>
     </test>
+
  -->
 </suite>

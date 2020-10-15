@@ -32,19 +32,24 @@ public class BrowserFactory {
         prop = PropertiesUtils.load("src/main/resources/env.properties");
         // TODO Auto-generated constructor stub
         switch (env.toLowerCase()) {
-            case "chrome":
+            case "local-chrome":
                 driver = BrowserFactory.chromeLaunch(browserParams);
                 break;
-            case "chrome-emulator":
+            case "local-chrome-emulator":
                 driver = BrowserFactory.chromeEmulatorLaunch(browserParams);
                 break;
-            case "chrome-remote":
-                driver = BrowserFactory.chromeRemoteLaunch(browserParams);
+            case "remote-cloud":
+                driver = BrowserFactory.RemoteBSLaunch(browserParams);
                 break;
-            case "chrome-remote-grid":
-                driver = BrowserFactory.chromeRemoteGridLaunch(browserParams);
+            case "remote-grid":
+                driver = BrowserFactory.RemoteGridLaunch(browserParams);
                 break;
             default:
+                try {
+                    throw new Exception("UNSUPPORTED ENVIRONMENT: " + env);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
         return driver;
@@ -77,7 +82,7 @@ public class BrowserFactory {
         return driver;
     }
 
-    public static WebDriver chromeRemoteLaunch(Map<String, String> browserParams) {
+    public static WebDriver RemoteBSLaunch(Map<String, String> browserParams) {
 
         final String USERNAME = prop.getProperty("bs.username");
         final String AUTOMATE_KEY = prop.getProperty("bs.automation_key");
@@ -104,9 +109,9 @@ public class BrowserFactory {
         return driver;
     }
 
-    public static WebDriver chromeRemoteGridLaunch(Map<String, String> browserParams) {
+    public static WebDriver RemoteGridLaunch(Map<String, String> browserParams) {
 
-        final String URL = "http://localhost:4444/wd/hub";
+        final String URL = prop.getProperty("se.grid_url");
 
         DesiredCapabilities caps = new DesiredCapabilities();
 
