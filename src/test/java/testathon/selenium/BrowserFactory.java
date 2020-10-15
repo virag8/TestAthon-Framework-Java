@@ -1,7 +1,6 @@
 package test.java.testathon.selenium;
 
 import com.aventstack.extentreports.ExtentTest;
-import com.aventstack.extentreports.Status;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -41,6 +40,9 @@ public class BrowserFactory {
                 break;
             case "chrome-remote":
                 driver = BrowserFactory.chromeRemoteLaunch(browserParams);
+                break;
+            case "chrome-remote-grid":
+                driver = BrowserFactory.chromeRemoteGridLaunch(browserParams);
                 break;
             default:
                 break;
@@ -89,6 +91,27 @@ public class BrowserFactory {
         caps.setCapability("browser_version", browserParams.get("browser_version"));
 
         caps.setCapability("name", browserParams.get("name"));
+
+        WebDriver driver = null;
+        try {
+            driver = new RemoteWebDriver(new URL(URL), caps);
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("driver launched: " + driver);
+
+        return driver;
+    }
+
+    public static WebDriver chromeRemoteGridLaunch(Map<String, String> browserParams) {
+
+        final String URL = "http://localhost:4444/wd/hub";
+
+        DesiredCapabilities caps = new DesiredCapabilities();
+
+        caps.setBrowserName(browserParams.get("browser"));
+
 
         WebDriver driver = null;
         try {

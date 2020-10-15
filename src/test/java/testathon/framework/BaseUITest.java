@@ -9,10 +9,12 @@ import org.testng.util.Strings;
 import test.java.testathon.selenium.DriverFactory;
 import test.java.testathon.utils.IO;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BaseUITest {
+    public static final String TESTDATA_JSON = "src/main/resources/testdata.json";
     protected DriverFactory driverInstance = null;
     protected String env = null;
     protected Map<String, String> envParams = null;
@@ -21,7 +23,6 @@ public class BaseUITest {
     @Parameters({"env", "env_params"})
     public void beforeTest(@Optional("chrome") String Env, @Optional("") String EnvParams) {
         try {
-            jsonDataProvider();
             env = Env;
             envParams = convertToMap(EnvParams);
             Reporter.log("Running tests for UI Environment: " + env);
@@ -70,9 +71,10 @@ public class BaseUITest {
     }
 
     @DataProvider(name = "jsonDataProvider")
-    public Object[][] jsonDataProvider() {
-        String testName = "testWordPressLogin";
-        JSONObject testDataList = IO.loadJSON("src/main/resources/testdata.json");
+    public Object[][] jsonDataProvider(Method method) {
+
+        String testName = method.getName();
+        JSONObject testDataList = IO.loadJSON(TESTDATA_JSON);
         JSONArray testDataArray = (JSONArray) testDataList.get(testName);
         Object[][] returnValue = new Object[testDataArray.size()][1];
         int index = 0;
