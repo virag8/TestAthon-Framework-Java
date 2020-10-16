@@ -34,7 +34,7 @@ public class TestListeners implements ITestListener {
     public void onTestFailure(ITestResult result) {
         String testName = result.getName() + "@" + UUID.randomUUID().toString().replace("-", "");
         ITestContext context = result.getTestContext();
-        WebDriver env = (WebDriver) context.getAttribute("env");
+        String env = (String) context.getAttribute("env");
         WebDriver driver = (WebDriver) context.getAttribute("webDriver");
         if (Report.getTest() == null) {
             logger = report.createExtent(testName + " Setup [" + env + "]");
