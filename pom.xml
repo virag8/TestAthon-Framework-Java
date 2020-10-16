@@ -112,5 +112,21 @@
 			<artifactId>rest-assured</artifactId>
 			<version>LATEST</version>
 		</dependency>
+		<dependency>
+			<groupId>com.epam.reportportal</groupId>
+			<artifactId>agent-java-testng</artifactId>
+			<version>LATEST</version>
+		</dependency>
+		<!-- TODO Leave only one dependency, depends on what logger you use: -->
+		<dependency>
+			<groupId>com.epam.reportportal</groupId>
+			<artifactId>logger-java-logback</artifactId>
+			<version>LATEST</version>
+		</dependency>
+		<dependency>
+			<groupId>com.epam.reportportal</groupId>
+			<artifactId>logger-java-log4j</artifactId>
+			<version>LATEST</version>
+		</dependency>
 	</dependencies>
 </project>
