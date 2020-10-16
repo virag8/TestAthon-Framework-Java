@@ -3,7 +3,7 @@
 <suite name="Suite">
 	<listeners>
 		<listener class-name="test.java.testathon.framework.TestListeners"/>
-		<listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
+<!--		<listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />-->
 	</listeners>
 
     <test thread-count="2" name="TestChromeEmulator" parallel="methods">
